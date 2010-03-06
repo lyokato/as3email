@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication
+    xmlns:mx="http://www.adobe.com/2006/mxml"
+    title="as3email"
+    layout="vertical"
+    width="800"
+    height="600"
+    paddingTop="5"
+    paddingLeft="5"
+    paddingRight="5"
+    paddingBottom="5"
+    backgroundGradientColors="[0x0099cc, 0x006666]"
+    creationComplete="start();"
+    >
+    <mx:Script>
+    <![CDATA[
+
+        import nl.demonsters.debugger.MonsterDebugger;
+        import org.coderepos.net.mime.MIMEMessage;
+
+        private var _debugger:MonsterDebugger;
+
+        private function start():void
+        {
+            _debugger = new MonsterDebugger(this);
+            DemoApp.app.rootWindow = this;
+            // This line requires AIR 2.0 and Flash Player 10.1.
+            // loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT,
+            //     uncaughtErrorHandler);
+        }
+
+        /*
+        private function uncaughtErrorHandler(e:UncaughtErrorEvent):void
+        {
+            e.error
+        }
+        */
+
+        private function openSendWindow():void
+        {
+            DemoApp.app.openSendWindow();
+        }
+
+        private function openLogWindow():void
+        {
+            DemoApp.app.openLogWindow();
+        }
+
+        private function openSettingWindow():void
+        {
+            DemoApp.app.openSettingWindow();
+        }
+
+        private function receiveMessages():void
+        {
+            DemoApp.app.receiveMessages();
+        }
+
+        private function changeItem():void
+        {
+            var msg:MIMEMessage = msgList.selectedItem as MIMEMessage;
+            if (msg != null && msg.isText) {
+                msgBody.text = msg.getText();
+            }
+        }
+    ]]>
+    </mx:Script>
+    <mx:VBox width="100%" height="100%">
+        <mx:HBox width="100%" height="30">
+            <mx:Button label="Recieve" width="100" height="20" click="receiveMessages();"/>
+            <mx:Button label="Send" width="100" height="20" click="openSendWindow();"/>
+            <mx:Button label="Setting" width="100" height="20" click="openSettingWindow();"/>
+            <mx:Button label="Log" width="100" height="20" click="openLogWindow();"/>
+        </mx:HBox>
+        <mx:HDividedBox width="100%" height="100%">
+            <mx:Panel title="Mailbox" width="20%" height="100%">
+            </mx:Panel>
+            <mx:VDividedBox width="80%" height="100%">
+                <mx:DataGrid id="msgList" width="100%" dataProvider="{DemoApp.app.messages}" rowCount="7" change="changeItem();">
+                    <mx:columns>
+                        <mx:DataGridColumn dataField="from" headerText="From"/>
+                        <mx:DataGridColumn dataField="subject" headerText="Subject"/>
+                        <mx:DataGridColumn dataField="date" headerText="Date"/>
+                    </mx:columns>
+                </mx:DataGrid>
+                <mx:Panel title="Selected" width="100%" height="50%">
+                   <mx:Form>
+                        <mx:FormItem label="From">
+                            <mx:Label text="{msgList.selectedItem.from}"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Subject">
+                            <mx:Label text="{msgList.selectedItem.subject}"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Date">
+                            <mx:Label text="{msgList.selectedItem.date}"/>
+                        </mx:FormItem>
+                        <mx:FormItem label="Body">
+                            <mx:Text id="msgBody"/>
+                        </mx:FormItem>
+                   </mx:Form>
+                </mx:Panel>
+            </mx:VDividedBox>
+        </mx:HDividedBox>
+    </mx:VBox>
+</mx:WindowedApplication>
+

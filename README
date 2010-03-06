@@ -1,0 +1,16 @@
+as3email
+
+MIT-License
+
+= dependencies
+
+- as3crypto
+- as3corelib
+- as3jcode
+- as3saslclient
+
+= todo
+
+- refactoring
+- imap transactions that has almost same interface as pop3 transactions
+- MUA example

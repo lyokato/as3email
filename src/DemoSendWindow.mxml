@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Window
+    xmlns:mx="http://www.adobe.com/2006/mxml"
+    width="800"
+    height="400"
+    >
+    <mx:Script>
+    <![CDATA[
+
+    import org.coderepos.net.mime.MIMEMessage;
+    import org.coderepos.net.mime.MIMEMailAddress;
+
+    import mx.controls.Alert;
+
+    private function send():void
+    {
+        // TODO: Email Format Validation
+        if (send_to.text.length == 0 || send_subject.text.length == 0) {
+            Alert.show("Input Error");
+            return;
+        }
+        var message:MIMEMessage = new MIMEMessage();
+        if (send_to.text.length > 0)
+            message.addTo(new MIMEMailAddress(send_to.text));
+        if (send_cc.text.length > 0)
+            message.addCc(new MIMEMailAddress(send_cc.text));
+        if (send_bcc.text.length > 0)
+            message.addBcc(new MIMEMailAddress(send_bcc.text));
+        message.subject = send_subject.text;
+        message.setText(send_body.text, 'UTF-8');
+
+        send_to.text      = "";
+        send_cc.text      = "";
+        send_bcc.text     = "";
+        send_subject.text = "";
+        send_body.text    = "";
+
+        DemoApp.app.sendMessage(message);
+
+    }
+
+    ]]>
+    </mx:Script>
+    <mx:Panel width="100%" height="100%">
+        <mx:Form width="100%" height="150">
+            <mx:FormItem label="To:">
+                <mx:TextInput id="send_to"/>
+            </mx:FormItem>
+            <mx:FormItem label="Cc:">
+                <mx:TextInput id="send_cc"/>
+            </mx:FormItem>
+            <mx:FormItem label="Bcc:">
+                <mx:TextInput id="send_bcc"/>
+            </mx:FormItem>
+            <mx:FormItem label="Subject:">
+                <mx:TextInput id="send_subject"/>
+            </mx:FormItem>
+        </mx:Form>
+        <mx:TextArea id="send_body" width="100%" height="100%" verticalScrollPolicy="auto"/>
+        <mx:Button label="Send" click="send();"/>
+    </mx:Panel>
+</mx:Window>
+

@@ -1,0 +1,8 @@
+- precise validation for email-address
+- body-text's each line length validation < 1024? RFC2821/2822
+- body filter CRLF -> LF (needed?)
+- group-list on address-field such like to,cc,bcc
+- implement streaming attachFile function
+- streaming parser and a feature that save attachment-parts into disk
+- performance improvement
+

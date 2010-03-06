@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Window xmlns:mx="http://www.adobe.com/2006/mxml"
+    width="650"
+    height="420"
+    >
+    <mx:Script>
+    <![CDATA[
+        [Bindable]
+        private var _setting:DemoSetting;// = new DemoSetting();
+
+        public function set setting(setting:DemoSetting):void
+        {
+            _setting = setting;
+
+            if (_setting.smtp_tls) {
+                smtp_tls.selected = true;
+            } else {
+                smtp_tls.selected = false;
+            }
+
+            if (_setting.smtp_smtpauth) {
+                smtp_auth_type1.selected = true;
+            } else {
+                smtp_auth_type2.selected = true;
+            }
+
+            if (_setting.pop_tls) {
+                pop3_tls.selected = true;
+            } else {
+                pop3_tls.selected = false;
+            }
+
+            if (_setting.pop_apop) {
+                pop3_auth_type2.selected = true;
+            } else {
+                pop3_auth_type1.selected = true;
+            }
+        }
+
+    ]]>
+    </mx:Script>
+    <mx:HBox width="100%" height="100%">
+        <mx:Panel title="SMTP" width="50%" height="100%">
+            <mx:Panel title="connection" width="100%" height="50%">
+                <mx:Form width="100%">
+                    <mx:FormItem label="host">
+                        <mx:TextInput id="smtp_host" text="{_setting.smtp_host}" change="_setting.smtp_host = smtp_host.text;"/>
+                    </mx:FormItem>
+                    <mx:FormItem label="port">
+                        <mx:TextInput id="smtp_port" text="{_setting.smtp_port}" change="_setting.smtp_port = smtp_port.text;"/>
+                    </mx:FormItem>
+                    <mx:FormItem label="TLS">
+                        <mx:CheckBox label="use TLS1.0" id="smtp_tls" click="_setting.smtp_tls = smtp_tls.selected;"/>
+                    </mx:FormItem>
+                </mx:Form>
+            </mx:Panel>
+            <mx:Panel title="authentication" width="100%" height="50%">
+                <mx:Form width="100%">
+                    <mx:FormItem label="address">
+                        <mx:TextInput id="from_address" text="{_setting.from_address}" change="_setting.from_address = from_address.text;"/>
+                    </mx:FormItem>
+                    <mx:FormItem label="username">
+                        <mx:TextInput id="smtp_username" text="{_setting.smtp_username}" change="_setting.smtp_username = smtp_username.text;"/>
+                    </mx:FormItem>
+                    <mx:FormItem label="password">
+                        <mx:TextInput displayAsPassword="true" id="smtp_password" text="{_setting.smtp_password}" change="_setting.smtp_password = smtp_password.text;"/>
+                    </mx:FormItem>
+                    <mx:FormItem label="type">
+                        <mx:RadioButton groupName="smtp_auth_type" id="smtp_auth_type1" label="SMTP Auth" click="_setting.smtp_smtpauth = smtp_auth_type1.selected;"/>
+                        <mx:RadioButton groupName="smtp_auth_type" id="smtp_auth_type2" label="POP before SMTP" click="_setting.smtp_smtpauth = smtp_auth_type1.selected;"/>
+                    </mx:FormItem>
+                </mx:Form>
+            </mx:Panel>
+        </mx:Panel>
+        <mx:Panel title="POP3" width="50%" height="100%">
+            <mx:Panel title="connection" width="100%" height="50%">
+                <mx:Form width="100%">
+                    <mx:FormItem label="host">
+                        <mx:TextInput id="pop3_host" text="{_setting.pop_host}" change="_setting.pop_host = pop3_host.text;"/>
+                    </mx:FormItem>
+                    <mx:FormItem label="port">
+                        <mx:TextInput id="pop3_port" text="{_setting.pop_port}" change="_setting.pop_port = pop3_port.text;"/>
+                    </mx:FormItem>
+                    <mx:FormItem label="TLS">
+                        <mx:CheckBox label="use TLS1.0" id="pop3_tls" click="_setting.pop_tls = pop3_tls.selected;"/>
+                    </mx:FormItem>
+                </mx:Form>
+            </mx:Panel>
+            <mx:Panel title="authentication" width="100%" height="50%">
+                <mx:Form width="100%">
+                    <mx:FormItem label="username">
+                        <mx:TextInput id="pop3_username" text="{_setting.pop_username}" change="_setting.pop_username = pop3_username.text;"/>
+                    </mx:FormItem>
+                    <mx:FormItem label="password">
+                        <mx:TextInput displayAsPassword="true" id="pop3_password" text="{_setting.pop_password}" change="_setting.pop_password = pop3_password.text;"/>
+                    </mx:FormItem>
+                    <mx:FormItem label="type">
+                        <mx:RadioButton groupName="pop3_auth_type" id="pop3_auth_type1" label="Standard" click="_setting.pop_apop = pop3_auth_type2.selected;"/>
+                        <mx:RadioButton groupName="pop3_auth_type" id="pop3_auth_type2" label="APOP" click="_setting.pop_apop = pop3_auth_type2.selected;"/>
+                    </mx:FormItem>
+                </mx:Form>
+            </mx:Panel>
+        </mx:Panel>
+    </mx:HBox>
+</mx:Window>
+
